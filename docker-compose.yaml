@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: FitCoach 
+      MYSQL_USER: souhail
+      MYSQL_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+
+  backend:
+    image: backend
+    container_name: backend_container
+    build:
+      context: ./backend
+    ports:
+      - "9090:9090"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/FitCoach?createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.MySQL8Dialect" # Ajoutez cette ligne
+      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: "100MB"
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "100MB"
+      SPRING_SERVLET_MULTIPART_ENABLED: "true"
+      
+  frontend:
+    image: frontend:v1
+    container_name: frontend_container
+    build:
+      context: ./frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
