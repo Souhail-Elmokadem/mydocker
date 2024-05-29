@@ -35,6 +35,6 @@ services:
     image: souhailelmokadem/frontend
     container_name: frontend_container
     ports:
-      - "4200:4200"
+      - "80:4200"
     depends_on:
       - backend
