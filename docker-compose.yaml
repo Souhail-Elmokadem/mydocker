@@ -16,8 +16,6 @@ services:
   backend:
     image: backend:latest
     container_name: backend_container
-    build:
-      context: ./backend
     ports:
       - "9090:9090"
     depends_on:
@@ -36,8 +34,6 @@ services:
   frontend:
     image: frontend:latest
     container_name: frontend_container
-    build:
-      context: ./frontend
     ports:
       - "4200:4200"
     depends_on:
