@@ -14,7 +14,7 @@ services:
       - /var/lib/mysql:/var/lib/mysql
 
   backend:
-    image: backend:latest
+    image: souhailelmokadem/backend
     container_name: backend_container
     ports:
       - "9090:9090"
@@ -32,7 +32,7 @@ services:
       SPRING_SERVLET_MULTIPART_ENABLED: "true"
       
   frontend:
-    image: frontend:latest
+    image: souhailelmokadem/frontend
     container_name: frontend_container
     ports:
       - "4200:4200"
